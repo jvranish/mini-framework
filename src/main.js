@@ -1,5 +1,4 @@
-import { html, eventHandler } from "./app.js";
-import {State} from "./state.js";
+import { html, eventHandler, State } from "./app.js";
 
 const updateValue = eventHandler((event, state) => {
   if (event.target instanceof HTMLInputElement) {
@@ -14,11 +13,17 @@ const addTodo = eventHandler((_event, state) => {
 /**
  * @param {State} state
  * @return {ReturnType<typeof html>}
-*/
+ */
 export const main = (state) =>
   html`
     <main>
       <h2>To-do list</h2>
+      <section>
+        <input type="text" value=${state.todoInput} oninput=${updateValue} />
+        <button disabled=${!state.todoInput} onclick=${addTodo}>
+          Add todo
+        </button>
+      </section>
       <ul>
         ${state.todos.map(
           (todo) => html`
@@ -31,11 +36,5 @@ export const main = (state) =>
           `
         )}
       </ul>
-      <section>
-        <input type="text" value=${state.todoInput} oninput=${updateValue} />
-        <button onclick=${addTodo}>Add todo</button>
-      </section>
     </main>
   `;
-
-

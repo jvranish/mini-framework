@@ -1,26 +1,15 @@
-import {
-  miniApp,
-  html,
-} from "../lib/mini-htm-superfine-sharedupdate.js";
+import { miniApp, html } from "../lib/mini-htm-superfine-sharedupdate.js";
 import { State } from "./state.js";
 import { main } from "./main.js";
 
-let cachedMini = null;
-function mini() {
-  if (cachedMini) {
-    return cachedMini;
-  }
-  cachedMini = miniApp(new State(), main, document.getElementById("root"));
-  return cachedMini;
-}
+const mini = miniApp(new State(), main, document.getElementById("root"));
 
-  /** @param {(event: Event, state: S) => void} f */
-export function eventHandler(f) {
-  return (/** @type {Event} */ event) => {
-    mini().dispatch((state) => {
+/** @param {(event: Event, state: State) => void} f */
+function eventHandler(f) {
+  return (/** @type {Event} */ event) =>
+    mini.dispatch((state) => {
       f(event, state);
     });
-  };
 }
-mini();
-export { mini, html };
+
+export { html, mini, eventHandler, State };
