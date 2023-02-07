@@ -27,7 +27,7 @@ export const main = (state) =>
       <ul>
         ${state.todos.map(
           (todo) => html`
-            <li>
+            <li key=${todo}>
               <label>
                 <input type="checkbox" />
                 <span>${todo}</span>
